@@ -13,9 +13,9 @@ jobs:
       options: --cpus 1
     steps:
       - name: initiate container
-        run: echo ""
+        run: ls /output/
       - name: Archive static files
         uses: actions/upload-artifact@v4
         with:
           name: truckee-xyz-static-file
-          path: /output
+          path: /output/*
