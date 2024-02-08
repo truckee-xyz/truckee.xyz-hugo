@@ -14,9 +14,10 @@ This script is mostly a wrapper around docker to provide quality of life improve
 
   EXAMPLE
 ./docker.sh help
-./docker.sh build_dev_container
-./docker.sh run_dev_container
-./docker.sh build_site
+./docker.sh build_dev
+./docker.sh run_dev
+./docker.sh build_ssg
+./docker.sh run_ssg
 
 
   COMMANDS
@@ -25,14 +26,14 @@ This script is mostly a wrapper around docker to provide quality of life improve
 * build_debug - build the dev-container in debug mode so you can get a shell
 * run_debug - run the development container in debug mode so you get a bash shell in it
 * build_ssg - build the hugo static site generator container, useful if we need to update hugo
-* build_site - generate the static files with hugo to be pushed to https://github.com/truckee-xyz/truckee.xyz repository
+* run_ssg - generate the static files with hugo to be pushed to https://github.com/truckee-xyz/truckee.xyz repository
 '
   echo "$help_string"
 }
 
 build_dev_container(){
   dev_image_tag="${image_name}:dev_${current_datetime}"
-  docker build . -t "${dev_image_tag}" --target dev-container
+  docker build . -t "${dev_image_tag}" --target dev
 }
 
 run_dev_container(){
@@ -44,7 +45,7 @@ run_dev_container(){
 
 build_debug_container(){
   debug_image_tag="${image_name}:debug_${current_datetime}"
-  docker build . -t "${debug_image_tag}" --target debug-container
+  docker build . -t "${debug_image_tag}" --target debug
 }
 
 run_debug_container(){
@@ -55,12 +56,12 @@ run_debug_container(){
 }
 
 build_ssg_container(){
-  static_build_image_tag="${image_name}:static_build_${current_datetime}"
-  docker build . -t "${static_build_image_tag}" --target static-build
+  static_build_image_tag="${image_name}:ssg_${current_datetime}"
+  docker build . -t "${static_build_image_tag}" --target ssg
 }
 
-build_site_static(){
-  latest_ssg_tag="$(docker images truckee-xyz:static_build* | \
+run_ssg_container(){
+  latest_ssg_tag="$(docker images truckee-xyz:ssg* | \
     tail -n 1 | \
     awk '{print $2}')"
   outdir="$(mktemp -d -p ./generated_site build.XXXXXXXXXX)"
@@ -68,15 +69,13 @@ build_site_static(){
   echo "find generated filed in ${outdir}"
 }
 
-
-
 case "${1}" in
   build_dev) build_dev_container;;
   run_dev) run_dev_container;;
   build_debug) build_debug_container;;
   run_debug) run_debug_container;;
   build_ssg) build_ssg_container;;
-  build_site) build_site_static;;
+  run_ssg) run_ssg_static;;
   help) print_help;;
   *) print_help;;
 esac
