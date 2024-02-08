@@ -22,7 +22,7 @@ jobs:
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Docker Buildx
@@ -33,12 +33,12 @@ jobs:
           context: .
           target: dev-container
           push: true
-          tags: dev-container
+          tags: ghcr.io/truckee-xyz/truckee.xyz-hugo:dev-container
       - name: Build and push debug container docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          target: debug-container
+          target: ghcr.io/truckee-xyz/truckee.xyz-hugo:debug-container
           push: true
           tags: debug-container
       - name: Build and push hugo static build docker image
@@ -47,4 +47,4 @@ jobs:
           context: .
           target: static-build
           push: true
-          tags: static-build
+          tags: ghcr.io/truckee-xyz/truckee.xyz-hugo:static-build
