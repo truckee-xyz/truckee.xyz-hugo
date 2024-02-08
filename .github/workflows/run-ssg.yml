@@ -3,14 +3,11 @@ on:
   push:
     tags:
       - build-site*
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 jobs:
-  container-test-job:
+  run-ssg:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:base
+      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:ssg
       volumes:
         - /output:/app/public
       options: --cpus 1
@@ -23,9 +20,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check for dockerenv file
-        run: echo
-      - name: Archive code coverage results
+      - name: initiate container
+        run: echo ""
+      - name: Archive static files
         uses: actions/upload-artifact@v4
         with:
           name: truckee-xyz-static-file
