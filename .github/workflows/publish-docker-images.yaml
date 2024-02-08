@@ -38,9 +38,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          target: ghcr.io/truckee-xyz/truckee.xyz-hugo:debug-container
+          target: debug-container
           push: true
-          tags: debug-container
+          tags: ghcr.io/truckee-xyz/truckee.xyz-hugo:debug-container
       - name: Build and push hugo static build docker image
         uses: docker/build-push-action@v5
         with:
