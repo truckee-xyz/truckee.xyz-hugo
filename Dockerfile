@@ -7,11 +7,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
 WORKDIR /app
 COPY truckee.xyz .
 
-FROM builder as debug
+FROM base as debug
 ENTRYPOINT ["/usr/bin/bash"]
 
-FROM builder as dev
+FROM base as dev
 ENTRYPOINT ["/usr/bin/hugo", "server", "--bind", "0.0.0.0", "--port", "8080"]
 
-FROM builder as ssg
+FROM base as ssg
 ENTRYPOINT ["/usr/bin/hugo"]
