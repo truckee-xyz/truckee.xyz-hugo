@@ -1,4 +1,4 @@
-FROM debian:bookworm as builder
+FROM debian:bookworm as base
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get update && \
   apt-get install --no-install-recommends -y \
@@ -7,13 +7,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
 WORKDIR /app
 COPY truckee.xyz .
 
-
-FROM builder as debug-container
+FROM builder as debug
 ENTRYPOINT ["/usr/bin/bash"]
 
-FROM builder as dev-container
+FROM builder as dev
 ENTRYPOINT ["/usr/bin/hugo", "server", "--bind", "0.0.0.0", "--port", "8080"]
 
-
-FROM builder as static-build
+FROM builder as ssg
 ENTRYPOINT ["/usr/bin/hugo"]
