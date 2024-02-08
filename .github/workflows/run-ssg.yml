@@ -8,14 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/truckee-xyz/truckee.xyz-hugo:ssg
-      volumes:
-        - /output:/app/public
       options: --cpus 1
     steps:
       - name: initiate container
-        run: ls /output/
+        run: ls /app/public/
       - name: Archive static files
         uses: actions/upload-artifact@v4
         with:
           name: truckee-xyz-static-file
-          path: /output/*
+          path: /app/public
