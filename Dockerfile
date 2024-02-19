@@ -5,7 +5,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
   git \
   ca-certificates \
   hugo
-WORKDIR /app
 
 FROM base as debug
 ENTRYPOINT ["/usr/bin/bash"]
