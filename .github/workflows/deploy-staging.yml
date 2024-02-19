@@ -27,9 +27,10 @@ jobs:
           repository: truckee-xyz/staging.truckee.xyz
       - name: commit artifact to repo
         run: |
-          ls -lash
-          ls -lash ../
-          ls -lash ../../
+          pwd ;
+          ls -lash ;
+          ls -lash ../ ;
+          ls -lash ../../ ;
 #          git config user.name github-actions-deploy-staging
 #          git config user.email github-actions-deploy-staging@truckee.xyz
 #          git add .
