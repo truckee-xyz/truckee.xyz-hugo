@@ -6,7 +6,6 @@ RUN DEBIAN_FRONTEND=noninteractive \
   ca-certificates \
   hugo
 WORKDIR /app
-COPY truckee.xyz .
 
 FROM base as debug
 ENTRYPOINT ["/usr/bin/bash"]
