@@ -8,23 +8,52 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  deploy-staging:
+  run-ssg:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    container:
+      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:base
+      options: --cpus 1
     steps:
-      - name: download-latest-static-files
-        uses: actions/download-artifact@v4
+      - name: initialize static files
+        run: cd /app ; ls -a ; hugo
+      - name: Archive static files
+        uses: actions/upload-artifact@v4
         with:
-          name: truckee-xyz-static-file 
+          name: truckee-xyz-static-file
+          path: /app/public/
       - name: Checkout repository staging.truckee.xyz
         uses: actions/checkout@v4
-        with: 
+        with:
           repository: truckee-xyz/staging.truckee.xyz
+          path: ../../
       - name: commit artifact to repo
-        run: 
-           ls -lash
+        run: |
+          ls -lash
+          ls -lash ../
+          ls -lash ../../
+#          git config user.name github-actions-deploy-staging
+#          git config user.email github-actions-deploy-staging@truckee.xyz
+#          git add .
+#          git commit -m "github actions deploy staging"
+#          git push
+
+#  deploy-staging:
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#      packages: write
+#    steps:
+#      - name: download-latest-static-files
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: truckee-xyz-static-file 
+#      - name: Checkout repository staging.truckee.xyz
+#        uses: actions/checkout@v4
+#        with: 
+#          repository: truckee-xyz/staging.truckee.xyz
+#      - name: commit artifact to repo
+#        run: 
+#           ls -lash
 #          git config user.name github-actions-deploy-staging
 #          git config user.email github-actions-deploy-staging@truckee.xyz
 #          git add .
