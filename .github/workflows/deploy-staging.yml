@@ -23,8 +23,11 @@ jobs:
           path: /app/public/
       - name: Checkout repository staging.truckee.xyz
         uses: actions/checkout@v4
+      - name: Checkout repository staging.truckee.xyz
+        uses: actions/checkout@v4
         with:
           repository: truckee-xyz/staging.truckee.xyz
+          path: staging.truckee.xyz
       - name: commit artifact to repo
         run: |
           pwd ;
