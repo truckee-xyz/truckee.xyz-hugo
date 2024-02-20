@@ -38,7 +38,7 @@ jobs:
       - name: commit artifact to repo
         run: |
           pwd ;
-          ls -a ;
+          ls -a truckee.xyz-hugo/truckee.xyz/public;
 #          which hugo ;
 #          ls / ;
 #          ls -a ../ ;
