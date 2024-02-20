@@ -5,28 +5,30 @@ The Hugo static site generator files and build scripts for truckee.xyz
 ## to build dev containers locally
 the `./docker.sh` script is a wrapper around some docker commands to build all the requisite containers you need
 
-### build and run hugo dev container so you can view it on localhost:8080
+### build hugo dev container
 ```
-./docker.sh build_dev
-./docker.sh run_dev
-```
-
-### build and run a debug container get a bash shell in the hugo container
-```
-./docker.sh build_debug
-./docker.sh run_debug
+./docker.sh build
 ```
 
-### build the container to generate the static files and run the container to generate the static files
+### run hugo local dev server and visit it on localhost:8080 in a browser
 ```
-./docker.sh build_ssg
-./docker.sh run_ssg
+./docker.sh server
+```
+
+### run a debug container get a bash shell in the hugo container
+```
+./docker.sh debug
+```
+
+### generate the static files in ./truckee.xyz/public
+```
+./docker.sh ssg
 ```
 
 ## to build the containers in github
 
 create a new tag with the following prepended to the name `build-docker`. anything can follow the `build-docker` as the github workflow is looking at the regex `build-docker*`
 
-## generate the static site files in github
+## deploy the site to staging.truckee.xyz
 
-create a new tag with the following prepended to the name `build-site`. anything can follow the `build-site` as the github workflow is looking at the regex `build-site*`
+create a new tag with the following prepended to the name `deploy-staging`. anything can follow the `deploy-staging` as the github workflow is looking at the regex `deploy-staging*`
