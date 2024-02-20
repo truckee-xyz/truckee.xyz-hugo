@@ -1,0 +1,37 @@
+name: Deploy static content to production truckee.xyz site
+on:
+  push:
+    tags:
+      - prod-v*
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:latest
+      options: --cpus 1
+    steps:
+      - name: Checkout repository truckee.xyz-hugo
+        uses: actions/checkout@v4
+        with:
+          path: truckee.xyz-hugo
+      - name: Checkout repository truckee.xyz
+        uses: actions/checkout@v4
+        with:
+          repository: truckee-xyz/truckee.xyz
+          path: truckee.xyz
+          token: ${{ secrets.PROD_TRUCKEE_XYZ_GITHUB_PAT }}
+      - name: run static site generator
+        run: |
+          cd truckee.xyz-hugo/truckee.xyz ; hugo;
+      - name: commit static files to staging.truckee.xyz and trigger website update
+        run: |
+          cp -r truckee.xyz-hugo/truckee.xyz/public/* truckee.xyz/docs/
+          cd truckee.xyz
+          git config user.name github-actions-deploy-prod
+          git config user.email github-actions-deploy-prod@truckee.xyz
+          git add .
+          git commit -m "github actions deploy prod"
+          git push
