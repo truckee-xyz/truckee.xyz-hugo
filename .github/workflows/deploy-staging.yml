@@ -8,7 +8,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 jobs:
-  run-ssg:
+  deploy-staging:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/truckee-xyz/truckee.xyz-hugo:base
@@ -29,10 +29,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: truckee-xyz/staging.truckee.xyz
-          path: /__w/staging.truckee.xyz
+          path: staging.truckee.xyz
       - name: commit artifact to repo
         run: |
           pwd ;
+          which hugo ;
+          ls / ;
           ls -lash ;
           ls -lash ../ ;
           ls -lash ../../ ;
