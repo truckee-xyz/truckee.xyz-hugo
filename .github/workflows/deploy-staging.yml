@@ -21,7 +21,7 @@ jobs:
 #        with:
 #          name: truckee-xyz-static-file
 #          path: /app/public/
-#      - name: Checkout repository truckee.xyz-hugo
+      - name: Checkout repository truckee.xyz-hugo
         uses: actions/checkout@v4
         with:
           path: truckee.xyz-hugo
