@@ -14,15 +14,15 @@ This script is mostly a wrapper around docker to provide quality of life improve
 
   EXAMPLE
 ./docker.sh help
-./docker.sh build_dev
-./docker.sh run_dev
-./docker.sh build_ssg
+./docker.sh build
+./docker.sh debug
+./docker.sh server
 ./docker.sh run_ssg
 
 
   COMMANDS
-* build_dev - build the docker container to have a running hugo server
-* run_dev - run the development container so you can see the changes in a webpage on localhost:8080
+* build - build the docker container to have a running hugo server
+* server - run the development container so you can see the changes in a webpage on localhost:8080
 * build_debug - build the dev-container in debug mode so you can get a shell
 * run_debug - run the development container in debug mode so you get a bash shell in it
 * build_ssg - build the hugo static site generator container, useful if we need to update hugo
