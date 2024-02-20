@@ -32,9 +32,9 @@ jobs:
           path: staging.truckee.xyz
       - name: initialize static files
         run: |
-          cd truckee.xyz-hugo/truckee.xyz ; hugo ;
-          cp public/* ../../staging/truckee.xyz/docs ;
-          cd ../.. ;
+          cd truckee.xyz-hugo/truckee.xyz ; hugo ; pwd ; ls public/
+#          cp public/* ../../staging/truckee.xyz/docs ;
+#          cd ../.. ;
       - name: commit artifact to repo
         run: |
           pwd ;
