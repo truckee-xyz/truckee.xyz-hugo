@@ -28,4 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tag: ghcr.io/truckee-xyz/truckee.xyz-hugo:latest
+          tags: ghcr.io/truckee-xyz/truckee.xyz-hugo:latest
