@@ -1,6 +1,6 @@
 #!/bin/bash
 
-image_name="truckee-xyz"
+image_name="truckee.xyz-hugo"
 current_datetime="$(date +%Y%m%d%H%M%S)"
 
 print_help(){
@@ -22,60 +22,47 @@ This script is mostly a wrapper around docker to provide quality of life improve
 
   COMMANDS
 * build - build the docker container to have a running hugo server
+* debug - run the development container in debug mode so you get a bash shell in it
 * server - run the development container so you can see the changes in a webpage on localhost:8080
-* build_debug - build the dev-container in debug mode so you can get a shell
-* run_debug - run the development container in debug mode so you get a bash shell in it
-* build_ssg - build the hugo static site generator container, useful if we need to update hugo
-* run_ssg - generate the static files with hugo to be pushed to https://github.com/truckee-xyz/truckee.xyz repository
+* ssg - generate the static files with hugo to be pushed to https://github.com/truckee-xyz/truckee.xyz repository
 '
   echo "$help_string"
 }
 
-build_dev_container(){
-  dev_image_tag="${image_name}:dev_${current_datetime}"
-  docker build . -t "${dev_image_tag}" --target dev
+build_container(){
+  image_tag="${image_name}:${current_datetime}"
+  docker build . -t "${image_tag}"
 }
 
-run_dev_container(){
-  latest_dev_tag="$(docker images truckee-xyz:dev* | \
+run_debug(){
+  latest_image_tag="$(docker images truckee.xyz-hugo:* | \
     tail -n 1 | \
     awk '{print $2}')"
-  docker run --rm -it -p 8080:8080 truckee-xyz:"${latest_dev_tag}"
+      docker run --rm -it -v $(pwd)/truckee.xyz:/app -p 8080:8080 truckee.xyz-hugo:"${latest_image_tag}" /bin/bash
 }
 
-build_debug_container(){
-  debug_image_tag="${image_name}:debug_${current_datetime}"
-  docker build . -t "${debug_image_tag}" --target debug
-}
-
-run_debug_container(){
-  latest_debug_tag="$(docker images truckee-xyz:debug* | \
+run_server(){
+  latest_image_tag="$(docker images truckee.xyz-hugo:* | \
     tail -n 1 | \
     awk '{print $2}')"
-  docker run --rm -it -p 8080:8080 truckee-xyz:"${latest_debug_tag}"
+  docker run --rm -it -v $(pwd)/truckee.xyz:/app -p 8080:8080 truckee.xyz-hugo:"${latest_image_tag}" /bin/bash -c 'cd /app ; hugo server --bind 0.0.0.0 --port 8080'
 }
 
-build_ssg_container(){
-  static_build_image_tag="${image_name}:ssg_${current_datetime}"
-  docker build . -t "${static_build_image_tag}" --target ssg
-}
-
-run_ssg_container(){
-  latest_ssg_tag="$(docker images truckee-xyz:ssg* | \
+run_ssg(){
+  latest_image_tag="$(docker images truckee.xyz-hugo:* | \
     tail -n 1 | \
     awk '{print $2}')"
-  outdir="$(mktemp -d -p ./generated_site build.XXXXXXXXXX)"
-  docker run --rm -it -v "${outdir}":/app/public truckee-xyz:"${latest_ssg_tag}"
-  echo "find generated filed in ${outdir}"
+  docker run --rm -it \
+    -v $(pwd)/truckee.xyz:/app \
+    -p 8080:8080 \
+    truckee.xyz-hugo:"${latest_image_tag}" /bin/bash -c 'cd /app ; /usr/bin/hugo'
 }
 
 case "${1}" in
-  build_dev) build_dev_container;;
-  run_dev) run_dev_container;;
-  build_debug) build_debug_container;;
-  run_debug) run_debug_container;;
-  build_ssg) build_ssg_container;;
-  run_ssg) run_ssg_static;;
+  build) build_container;;
+  debug) run_debug;;
+  server) run_server;;
+  ssg) run_ssg;;
   help) print_help;;
   *) print_help;;
 esac
