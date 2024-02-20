@@ -1,8 +1,8 @@
-name: Deploy static content to staging.truckee.xyz
+name: Deploy static content to production truckee.xyz site
 on:
   push:
     tags:
-      - deploy-staging*
+      - prod-v*
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -17,21 +17,21 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: truckee.xyz-hugo
-      - name: Checkout repository staging.truckee.xyz
+      - name: Checkout repository truckee.xyz
         uses: actions/checkout@v4
         with:
-          repository: truckee-xyz/staging.truckee.xyz
-          path: staging.truckee.xyz
-          token: ${{ secrets.STAGING_TRUCKEE_XYZ_GITHUB_PAT }}
+          repository: truckee-xyz/truckee.xyz
+          path: truckee.xyz
+          token: ${{ secrets.PROD_TRUCKEE_XYZ_GITHUB_PAT }}
       - name: run static site generator
         run: |
           cd truckee.xyz-hugo/truckee.xyz ; hugo;
       - name: commit static files to staging.truckee.xyz and trigger website update
         run: |
-          cp -r truckee.xyz-hugo/truckee.xyz/public/* staging.truckee.xyz/docs/
-          cd staging.truckee.xyz
-          git config user.name github-actions-deploy-staging
-          git config user.email github-actions-deploy-staging@truckee.xyz
+          cp -r truckee.xyz-hugo/truckee.xyz/public/* truckee.xyz/docs/
+          cd truckee.xyz
+          git config user.name github-actions-deploy-prod
+          git config user.email github-actions-deploy-prod@truckee.xyz
           git add .
-          git commit -m "github actions deploy staging"
+          git commit -m "github actions deploy prod"
           git push
