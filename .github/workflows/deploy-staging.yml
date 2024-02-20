@@ -30,6 +30,7 @@ jobs:
         with:
           repository: truckee-xyz/staging.truckee.xyz
           path: staging.truckee.xyz
+          token: ${{ secrets.STAGING_TRUCKEE_XYZ_GITHUB_PAT }}
       - name: run static site generator
         run: |
           cd truckee.xyz-hugo/truckee.xyz ; hugo ; pwd ; ls public/
