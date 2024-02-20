@@ -30,7 +30,7 @@ jobs:
         with:
           repository: truckee-xyz/staging.truckee.xyz
           path: staging.truckee.xyz
-      - name: initialize static files
+      - name: run static site generator
         run: |
           cd truckee.xyz-hugo/truckee.xyz ; hugo ; pwd ; ls public/
 #          cp public/* ../../staging/truckee.xyz/docs ;
@@ -39,6 +39,8 @@ jobs:
         run: |
           pwd ;
           ls -a truckee.xyz-hugo/truckee.xyz/public;
+          ls -a staging.truckee.xyz
+          cp -r truckee.xyz-hugo/truckee.xyz/public/* staging.truckee.xyz/docs/
 #          which hugo ;
 #          ls / ;
 #          ls -a ../ ;
