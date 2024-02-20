@@ -11,7 +11,7 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:base
+      image: ghcr.io/truckee-xyz/truckee.xyz-hugo:latest
       options: --cpus 1
     steps:
 #      - name: initialize static files
