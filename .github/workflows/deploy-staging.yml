@@ -33,9 +33,9 @@ jobs:
       - name: commit artifact to repo
         run: |
           pwd ;
+          ls -a ;
 #          which hugo ;
 #          ls / ;
-          ls -a ;
 #          ls -a ../ ;
 #          ls -a ../../ ;
 #          git config user.name github-actions-deploy-staging
