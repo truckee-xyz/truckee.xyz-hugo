@@ -45,7 +45,7 @@ run_server(){
   latest_image_tag="$(docker images truckee.xyz-hugo:* | \
     tail -n 1 | \
     awk '{print $2}')"
-  docker run --rm -it -v $(pwd)/truckee.xyz:/app -p 8080:8080 truckee.xyz-hugo:"${latest_image_tag}" /bin/bash -c 'cd /app ; hugo server --bind 0.0.0.0 --port 8080'
+  docker run --rm -it -v $(pwd)/truckee.xyz:/app -p 8080:8080 truckee.xyz-hugo:"${latest_image_tag}" /bin/bash -c 'cd /app ; hugo server --bind 0.0.0.0 --port 8080 --disableFastRender'
 }
 
 run_ssg(){
