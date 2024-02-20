@@ -30,6 +30,11 @@ jobs:
         with:
           repository: truckee-xyz/staging.truckee.xyz
           path: staging.truckee.xyz
+      - name: initialize static files
+        run: |
+          cd truckee.xyz-hugo/truckee.xyz ; hugo ;
+          cp public/* ../../staging/truckee.xyz/docs ;
+          cd ../.. ;
       - name: commit artifact to repo
         run: |
           pwd ;
