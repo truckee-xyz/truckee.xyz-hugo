@@ -35,10 +35,9 @@ jobs:
           pwd ;
           which hugo ;
           ls / ;
-          ls -lash ;
-          ls -lash ../ ;
-          ls -lash ../../ ;
-          docker ps ;
+          ls -a ;
+          ls -a ../ ;
+          ls -a ../../ ;
 #          git config user.name github-actions-deploy-staging
 #          git config user.email github-actions-deploy-staging@truckee.xyz
 #          git add .
