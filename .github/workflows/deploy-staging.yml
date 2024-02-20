@@ -37,19 +37,15 @@ jobs:
 #          cd ../.. ;
       - name: commit artifact to repo
         run: |
-          pwd ;
-          ls -a truckee.xyz-hugo/truckee.xyz/public;
-          ls -a staging.truckee.xyz
           cp -r truckee.xyz-hugo/truckee.xyz/public/* staging.truckee.xyz/docs/
-#          which hugo ;
-#          ls / ;
-#          ls -a ../ ;
-#          ls -a ../../ ;
-#          git config user.name github-actions-deploy-staging
-#          git config user.email github-actions-deploy-staging@truckee.xyz
-#          git add .
-#          git commit -m "github actions deploy staging"
-#          git push
+          ls -lash staging.truckee.xyz/docs/
+          cd staging.truckee.xyz
+          git status
+          git config user.name github-actions-deploy-staging
+          git config user.email github-actions-deploy-staging@truckee.xyz
+          git add .
+          git commit -m "github actions deploy staging"
+          git push
 
 #  deploy-staging:
 #    runs-on: ubuntu-latest
